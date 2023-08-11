@@ -8,9 +8,6 @@
 # include <limits.h>
 # include <sys/time.h>
 
-# define ARG_ERROR "❌ Error : wrong argument number\n"
-# define INV_ERROR "❌ Error : invalid arguments\n"
-
 // Structures
 typedef struct s_philosophers
 {
@@ -35,7 +32,7 @@ typedef struct s_arguments
 	int			number_of_meals;
 	int			time_starter;
 	int			end;
-	pthread_mutex_t	mutex_write;
+	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	*mutex_forks;
 	t_philosophers	** philosophers;
 }				t_arguments;
@@ -51,12 +48,16 @@ typedef struct s_arguments
 # define BWHT "\e[1;37m"
 # define RESET "\e[0m"
 
+// Erreurs
+# define ARG_ERROR "⚠️  Error : wrong argument number \n"
+# define INV_ERROR "⚠️  Error : invalid arguments\n"
+
 // Fonctions
 int			ft_atoi(char *str);
 void	check_meal(t_philosophers *philosophers);
 void	*monitor(void *argument);
 void	message(t_arguments *table, int philo_number, char *message);
-void	ft_usleep(u_int64_t time_in_milliseconde);
+void	ft_usleep(__uint64_t);
 void	take_fork(t_philosophers *philosophers);
 void	*routine(void *argument);
 void	start_simulation(t_arguments *table);

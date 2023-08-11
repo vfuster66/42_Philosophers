@@ -1,14 +1,6 @@
 NAME	= philo
 CC		= gcc
-CFLAGS	= -Werror -Wall -Wextra -pthread
-
-MODE	= none
-ifeq ($(MODE), pretty)
-	CFLAGS	+= -D DEBUG_FORMATTING=1
-endif
-ifeq ($(MODE), debug)
-	CFLAGS	+= -D DEBUG_FORMATTING=1 -fsanitize=thread -g
-endif
+CFLAGS	= -Werror -Wall -Wextra -pthread -g3
 
 SRC_PATH = sources/
 OBJ_PATH = objects/
@@ -25,16 +17,18 @@ all: $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
+	@$(CC) $(CFLAGS) $(OBJS) -o $@
+	@echo "✅ Philosophers compiled"
 
 clean:
 	@rm -rf $(OBJ_PATH)
 
 fclean: clean
 	@rm -f $(NAME)
+	@echo "🧽 🪣 🧹 Philosophers cleaned"
 
 re: fclean all
 

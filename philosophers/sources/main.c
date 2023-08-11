@@ -24,28 +24,28 @@ int	ft_atoi(char *str)
 	return (result * sign);
 }
 
-void	check_meal(t_philosophers *philosophers)
+void	check_meal(t_philosophers *philosopher)
 {
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&philosophers->mutex_eating);
-	while (i < philosophers->table->number_of_meals)
+	pthread_mutex_lock(&philosopher->mutex_eating);
+	while (i < philosopher->table->number_of_meals)
 	{
-		if (philosophers->table->philosophers[i]->meal_counter
-			>= philosophers->table->number_of_meals)
+		if (philosopher->table->philosophers[i]->meal_counter
+			>= philosopher->table->number_of_meals)
 		{
-			if (i == philosophers->table->number_of_philosophers - 1)
+			if (i == philosopher->table->number_of_philosophers - 1)
 			{
-				pthread_mutex_lock(&philosophers->table->mutex_write);
-				philosophers->table->end = 0;
+				pthread_mutex_lock(&philosopher->table->mutex_print);
+				philosopher->table->end = 0;
 			}
 			i++;
 		}
 		else
 			break ;
 	}
-	pthread_mutex_unlock(&philosophers->mutex_eating);
+	pthread_mutex_unlock(&philosopher->mutex_eating);
 }
 
 void	*monitor(void *argument)
@@ -61,12 +61,12 @@ void	*monitor(void *argument)
 		{
 			pthread_mutex_lock(&philosophers->mutex_eating);
 			message(philosophers->table,
-				philosophers->philosopher_number, "died 💀 🪦");
+				philosophers->philosopher_number, "⚰️  died");
 			philosophers->table->end = 0;
 			pthread_mutex_unlock(&philosophers->mutex_eating);
 		}
 		if (philosophers->table->number_of_meals
-				&& philosophers->meal_counter 
+				&& philosophers->meal_counter
 				>= philosophers->table->number_of_meals)
 			check_meal(philosophers);
 		usleep(100);
@@ -76,16 +76,16 @@ void	*monitor(void *argument)
 
 void	message(t_arguments *table, int philo_number, char *message)
 {
-	pthread_mutex_lock(&table->mutex_write);
+	pthread_mutex_lock(&table->mutex_print);
 	printf("[%d]\tPhilosopher %d %s\n", get_time() - table->time_starter,
 		philo_number + 1, message);
 	if (message[0] != 'd')
-		pthread_mutex_unlock(&table->mutex_write);
+		pthread_mutex_unlock(&table->mutex_print);
 }
 
-void	ft_usleep(u_int64_t time_in_milliseconde)
+void	ft_usleep(__uint64_t time_in_milliseconde)
 {
-	u_int64_t	time_start;
+	__uint64_t	time_start;
 
 	time_start = 0;
 	time_start = get_time();
@@ -98,16 +98,16 @@ void	take_fork(t_philosophers *philosophers)
 	pthread_mutex_lock
 		(&philosophers->table->mutex_forks[philosophers->left_fork]);
 	message(philosophers->table, philosophers->philosopher_number,
-		"has taken the left fork 🍴");
+		"🍴  has taken the left fork");
 	pthread_mutex_lock
 		(&philosophers->table->mutex_forks[philosophers->right_fork]);
 	message(philosophers->table, philosophers->philosopher_number,
-		"has taken the right fork 🍴");
+		"🍴  has taken the right fork");
 	pthread_mutex_lock(&philosophers->mutex_eating);
 	philosophers->last_meal_eaten = get_time();
 	philosophers->is_eating = 1;
 	message(philosophers->table, philosophers->philosopher_number,
-		"is eating 😋 🍝");
+		"🍔 is eating");
 	ft_usleep(philosophers->table->time_to_eat);
 	philosophers->is_eating = 0;
 	philosophers->meal_counter++;
@@ -125,12 +125,12 @@ void	*routine(void *argument)
 		pthread_mutex_unlock
 			(&philosophers->table->mutex_forks[philosophers->left_fork]);
 		pthread_mutex_unlock
-			(&philosophers->table->mutex_forks[philosophers->left_fork]);
+			(&philosophers->table->mutex_forks[philosophers->right_fork]);
 		message(philosophers->table,
-			philosophers->philosopher_number, "is_sleeping 😴 💤");
+			philosophers->philosopher_number, "💤 is_sleeping");
 		ft_usleep(philosophers->table->time_to_sleep);
 		message(philosophers->table,
-			philosophers->philosopher_number, "is thinking 🤔 💭");
+			philosophers->philosopher_number, "💭 is thinking");
 	}
 	return (NULL);
 }
@@ -163,7 +163,7 @@ int	get_time(void)
 	static struct timeval tv;
 
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * (u_int64_t)1000 + (tv.tv_usec / 1000));
+	return (tv.tv_sec * (__uint64_t)1000 + (tv.tv_usec / 1000));
 }	
 
 t_philosophers **initialize_philosophers(t_arguments *table)
@@ -203,7 +203,7 @@ pthread_mutex_t *initialize_forks(t_arguments *table)
 		|| table->time_to_eat == -1 || table->time_to_sleep == -1
 		|| table->number_of_meals == -1)
 	{
-		printf(INV_ERROR);
+		printf("%s", INV_ERROR);
 		return (NULL);
 	}
 	mutex_forks = malloc(sizeof(pthread_mutex_t) 
@@ -225,13 +225,14 @@ t_arguments	*initialize(int ac, char **av)
 	table = malloc(sizeof(t_arguments) * 1);
 	if (!table)
 		return (NULL);
-	table->number_of_philosophers = (u_int64_t)ft_atoi(av[1]);
-	table->time_to_die = (u_int64_t)ft_atoi(av[2]);
-	table->time_to_eat = (u_int64_t)ft_atoi(av[3]);
+	table->number_of_philosophers = (__uint64_t)ft_atoi(av[1]);
+	table->time_to_die = (__uint64_t)ft_atoi(av[2]);
+	table->time_to_eat = (__uint64_t)ft_atoi(av[3]);
+	table->time_to_sleep = (__uint64_t)ft_atoi(av[4]);
 	table->number_of_meals = 0;
 	if (ac == 6)
 		table->number_of_meals = ft_atoi(av[5]);
-	pthread_mutex_init(&table->mutex_write, NULL);
+	pthread_mutex_init(&table->mutex_print, NULL);
 	table->time_starter = get_time();
 	table->mutex_forks = initialize_forks(table);
 	table->philosophers = initialize_philosophers(table);
@@ -261,7 +262,7 @@ int	check_arguments_validity(char **av, int ac)
 	i = 1;
 	if (ac < 5 || ac > 6)
 	{
-		printf(ARG_ERROR);
+		printf("%s%s%s", BRED, ARG_ERROR, RESET);
 		return (1);
 	}
 	while (i < ac)
@@ -269,7 +270,7 @@ int	check_arguments_validity(char **av, int ac)
 		if (av[i][0] == '-'|| str_is_number(av[i])
 			|| ft_atoi(av[i]) == 0)
 		{
-			printf(INV_ERROR);
+			printf("%s%s%s", BRED, INV_ERROR, RESET);
 			return (1);
 		}
 		i++;
@@ -277,7 +278,7 @@ int	check_arguments_validity(char **av, int ac)
 	return (0);
 }
 
-int	main(int ac, char ** av)
+int	main(int ac, char **av)
 {
 	t_arguments	*table;
 
@@ -286,6 +287,7 @@ int	main(int ac, char ** av)
 	table = initialize(ac, av);
 	if (!table)
 		return (1);
+	table->end = 1;
 	table->time_starter = get_time();
 	start_simulation(table);
 	while (table->end)
