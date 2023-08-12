@@ -9,7 +9,7 @@
 # include <sys/time.h>
 
 // Structures
-typedef struct s_philosophers
+typedef struct	s_philosophers
 {
 	pthread_t	philo_thread;
 	pthread_t	monitor_thread;
