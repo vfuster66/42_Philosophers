@@ -6,7 +6,7 @@
 /*   By: vfuster- <vfuster-@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 11:45:02 by vfuster-          #+#    #+#             */
-/*   Updated: 2023/08/14 14:06:56 by vfuster-         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:26:49 by vfuster-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	start_simulation(t_arguments *table)
 		table->philosophers[i]->last_meal_eaten = get_time();
 		if (table->philosophers[i]->philosopher_pid == 0)
 		{
-			pthread_create(&table->philosophers[i]->monitor_die, NULL, monitor_die,
+			pthread_create(&table->philosophers[i]->monitor_die,
+				NULL, monitor_die,
 				(void *)table->philosophers[i]);
 			routine(table->philosophers[i]);
 			exit(1);
@@ -90,4 +91,3 @@ void	close_processus(t_arguments *table)
 			kill(table->philosophers[i++]->philosopher_pid, SIGKILL);
 	}
 }
-

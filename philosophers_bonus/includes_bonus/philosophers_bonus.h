@@ -6,7 +6,7 @@
 /*   By: vfuster- <vfuster-@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 08:32:56 by vfuster-          #+#    #+#             */
-/*   Updated: 2023/08/14 13:09:44 by vfuster-         ###   ########.fr       */
+/*   Updated: 2023/08/14 16:12:19 by vfuster-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,19 @@ typedef struct s_arguments
 // Fonctions
 
 /*<-- utils_bonus.c -->*/
-int					ft_atoi(char *str);
+int				ft_atoi(char *str);
 int				get_time(void);
-void			message(t_arguments *table, int	philo_number, char *msg);
+void			message(t_arguments *table, int philo_number, char *msg);
 void			ft_usleep(__uint64_t time_in_milliseconde);
 
 /*<-- initialize_bonus.c -->*/
 t_arguments		*initialize_arguments(int ac, char **av);
 t_philosophers	**initialize_philosophers(t_arguments *table);
-int					initialize_semaphores(t_arguments *table);
+int				initialize_semaphores(t_arguments *table);
 
 /*<-- checks_bonus.c -->*/
-int					str_is_number(char *string);
-int					check_arguments_validity(char **av, int ac);
+int				str_is_number(char *string);
+int				check_arguments_validity(char **av, int ac);
 void			*monitor_meal(void *arguments);
 void			*monitor_die(void *argument);
 

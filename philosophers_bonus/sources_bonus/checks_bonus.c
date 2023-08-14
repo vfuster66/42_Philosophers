@@ -6,7 +6,7 @@
 /*   By: vfuster- <vfuster-@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 09:03:33 by vfuster-          #+#    #+#             */
-/*   Updated: 2023/08/14 14:05:05 by vfuster-         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:27:32 by vfuster-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 void	*monitor_meal(void *arguments)
 {
 	t_arguments	*table;
-	int	meal_counter;
-	int	i;
+	int			meal_counter;
+	int			i;
 
 	table = (t_arguments *)arguments;
 	meal_counter = 0;

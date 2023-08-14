@@ -6,7 +6,7 @@
 /*   By: vfuster- <vfuster-@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 09:09:12 by vfuster-          #+#    #+#             */
-/*   Updated: 2023/08/14 13:37:55 by vfuster-         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:26:11 by vfuster-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_philosophers	**initialize_philosophers(t_arguments *table)
 	int				i;
 
 	philosophers = (t_philosophers **)malloc(sizeof(t_philosophers *)
-		* table->number_of_philosophers);
+			* table->number_of_philosophers);
 	if (!philosophers)
 		return (NULL);
 	i = 0;
@@ -39,8 +39,6 @@ t_philosophers	**initialize_philosophers(t_arguments *table)
 	}
 	return (philosophers);
 }
-
-
 
 // Initialise la structure principale en utilisant
 // les arguments en ligne de commande
@@ -76,8 +74,8 @@ t_arguments	*initialize_arguments(int ac, char **av)
 int	initialize_semaphores(t_arguments *table)
 {
 	sem_unlink("forking");
-	table->sem_forks = sem_open("forking",O_CREAT, 0644,
-		table->number_of_philosophers);
+	table->sem_forks = sem_open("forking", O_CREAT, 0644,
+			table->number_of_philosophers);
 	if (table->sem_forks == SEM_FAILED)
 		return (1);
 	sem_unlink("printing");

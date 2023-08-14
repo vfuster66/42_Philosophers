@@ -6,7 +6,7 @@
 /*   By: vfuster- <vfuster-@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 09:06:04 by vfuster-          #+#    #+#             */
-/*   Updated: 2023/08/14 14:07:19 by vfuster-         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:24:34 by vfuster-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	ft_atoi(char *str)
 void	message(t_arguments *table, int philo_number, char *message)
 {
 	sem_wait(table->sem_print);
-	printf(BWHT "[%d]\tPhilosopher %d %s\n" RESET, get_time() - table->time_starter,
+	printf(BWHT "[%d]\tPhilosopher %d %s\n" RESET,
+		get_time() - table->time_starter,
 		philo_number + 1, message);
 	if (message[0] != 'd')
 		sem_post(table->sem_print);
