@@ -12,19 +12,35 @@
 
 #include "../includes/philosophers.h"
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
-	t_arguments	*table;
+    t_arguments *table;
 
-	if (check_arguments_validity(av, ac))
-		return (1);
-	table = initialize_arguments(ac, av);
-	if (!table)
-		return (1);
-	table->end = 1;
-	table->time_starter = get_time();
-	start_simulation(table);
-	while (table->end)
-		continue ;
-	return (0);
+    // Vérifie la validité des arguments en ligne de commande
+    if (check_arguments_validity(av, ac))
+        return (1);
+	
+    // Initialise la structure de la simulation avec les arguments fournis
+    table = initialize(ac, av);
+    
+    // Vérifie si l'initialisation s'est déroulée avec succès
+    if (!table)
+        return (1);
+    
+    // Initialise la variable 'end' à 1 pour indiquer que la simulation démarre
+    table->end = 1;
+    
+    // Récupère le temps de démarrage de la simulation
+    table->time_starter = get_time();
+    
+    // Démarre la simulation en créant les threads pour les philosophes et les moniteurs
+    start_simulation(table);
+    
+    // Attente jusqu'à ce que la simulation se termine (lorsque 'end' devient 0)
+    while (table->end)
+        continue;
+
+    // Retourne 0 pour indiquer que le programme s'est terminé avec succès
+    return (0);
 }
+
