@@ -76,7 +76,7 @@ void *monitor(void *argument)
             pthread_mutex_lock(&philosophers->mutex_eating);
 
             // Affiche que le philosophe est mort
-            message(philosophers->table, philosophers->philosopher_number, "⚰️  died");
+            message(philosophers->table, philosophers->philosopher_number, BRED "⚰️   died" RESET);
 
             // Met fin à la simulation en modifiant la propriété 'end' de la table à 0
             philosophers->table->end = 0;
