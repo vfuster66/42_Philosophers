@@ -40,30 +40,44 @@ int	ft_atoi(char *str)
 // des evenements de simulation
 void	message(t_arguments *table, int philo_number, char *message)
 {
-	sem_wait(table->sem_print);
+	// Attend que le sémaphore soit disponible pour verrouiller l'affichage
+	sem_wait(table->sem_print); 
+
+	// Affiche le message avec le numéro du philosophe et le temps écoulé depuis le démarrage
 	printf(BWHT "[%d]\tPhilosopher %d %s\n" RESET,
-		get_time() - table->time_starter,
+	get_time() - table->time_starter,
 		philo_number + 1, message);
-	if (message[0] != 'd')
-		sem_post(table->sem_print);
+
+	 if (message[0] != 'd')
+	    // Libère le sémaphore pour autoriser l'affichage
+	    sem_post(table->sem_print); 
 }
+
 
 // Met le thread en pause
-void	ft_usleep(__uint64_t time_in_milliseconde)
+void	ft_usleep(__uint64_t time_in_millisecond)
 {
-	__uint64_t	time_start;
+    __uint64_t time_start;
 
-	time_start = 0;
-	time_start = get_time();
-	while ((get_time() - time_start) < time_in_milliseconde)
-		usleep(time_in_milliseconde / 10);
+	// Obtenir le temps actuel
+	time_start = get_time(); 
+	while ((get_time() - time_start) < time_in_millisecond)
+	{
+		// Attend 1/10ème du temps spécifié
+		usleep(time_in_millisecond / 10); 
+	}
 }
+
 
 // Renvoie le temps ecoule en ms depuis un moment de reference
 int	get_time(void)
 {
-	static struct timeval	tv;
+	// Structure pour stocker le temps actuel
+	static struct timeval tv;
 
+	// Obtenir le temps actuel en secondes et microsecondes
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * (__uint64_t)1000 + (tv.tv_usec / 1000));
+	// Convertir en millisecondes
+	return (tv.tv_sec * (__uint64_t)1000 + (tv.tv_usec / 1000)); 
 }
+
