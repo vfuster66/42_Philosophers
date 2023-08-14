@@ -44,7 +44,7 @@ void message(t_arguments *table, int philo_number, char *message)
     pthread_mutex_lock(&table->mutex_print);
 
     // Affiche le message formaté avec des informations sur le temps, le numéro du philosophe et le message
-    printf("[%d]\tPhilosopher %d %s\n", get_time() - table->time_starter, philo_number + 1, message);
+    printf(BWHT "[%d]\tPhilosopher %d %s\n" RESET, get_time() - table->time_starter, philo_number + 1, message);
 
     // Vérifie si le message n'est pas un message de décès
     if (message[0] != 'd')
