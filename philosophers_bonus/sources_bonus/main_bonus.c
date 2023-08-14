@@ -12,16 +12,28 @@
 
 #include "../includes_bonus/philosophers_bonus.h"
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
-	t_arguments	*table;
+    t_arguments *table;
 
-	if (check_arguments_validity(av, ac))
-		return (1);
-	table = initialize_arguments(ac, av);
-	if (!table)
-		return (1);
-	table->time_starter = get_time();
-	start_simulation(table);
-	return (0);
+    // Vérifie la validité des arguments passés en ligne de commande
+    if (check_arguments_validity(av, ac))
+        return (1);
+
+    // Initialise la structure t_arguments
+    table = initialize_arguments(ac, av);
+
+    // Vérifie si l'initialisation a échoué
+    if (!table)
+        return (1);
+
+    // Enregistre le moment de démarrage de la simulation
+    table->time_starter = get_time();
+
+    // Démarre la simulation
+    start_simulation(table);
+
+    // La simulation s'exécute indéfiniment, donc cette ligne n'est atteinte que lorsque la simulation se termine
+    return (0);
 }
+
