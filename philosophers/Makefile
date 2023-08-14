@@ -5,7 +5,7 @@ CFLAGS	= -Werror -Wall -Wextra -pthread -g3
 SRC_PATH = sources/
 OBJ_PATH = objects/
 
-SRC		=	main.c
+SRC		=	main.c initialize.c checks.c threads.c utils.c
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:.c=.o)

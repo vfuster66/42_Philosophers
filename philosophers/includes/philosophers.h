@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vfuster- <vfuster-@student.42perpignan.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/14 08:32:56 by vfuster-          #+#    #+#             */
+/*   Updated: 2023/08/14 09:01:23 by vfuster-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
@@ -9,33 +21,33 @@
 # include <sys/time.h>
 
 // Structures
-typedef struct	s_philosophers
+typedef struct s_philosophers
 {
-	pthread_t	philo_thread;
-	pthread_t	monitor_thread;
-	int			philosopher_number;
-	int			meal_counter;
-	int			last_meal_eaten;
-	int			is_eating;
-	int			left_fork;
-	int			right_fork;
-	pthread_mutex_t	mutex_eating;
+	pthread_t			philo_thread;
+	pthread_t			monitor_thread;
 	struct s_arguments	*table;
-}				t_philosophers;
+	int					philosopher_number;
+	int					meal_counter;
+	int					last_meal_eaten;
+	int					is_eating;
+	int					left_fork;
+	int					right_fork;
+	pthread_mutex_t		mutex_eating;
+}						t_philosophers;
 
 typedef struct s_arguments
 {
-	int			number_of_philosophers;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			number_of_meals;
-	int			time_starter;
-	int			end;
-	pthread_mutex_t	mutex_print;
-	pthread_mutex_t	*mutex_forks;
-	t_philosophers	** philosophers;
-}				t_arguments;
+	int					number_of_philosophers;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					number_of_meals;
+	int					time_starter;
+	int					end;
+	pthread_mutex_t		mutex_print;
+	pthread_mutex_t		*mutex_forks;
+	t_philosophers		**philosophers;
+}						t_arguments;
 
 // Couleurs
 # define BBLK "\e[1;30m"
@@ -53,19 +65,19 @@ typedef struct s_arguments
 # define INV_ERROR "⚠️  Error : invalid arguments\n"
 
 // Fonctions
-int			ft_atoi(char *str);
-void	check_meal(t_philosophers *philosophers);
-void	*monitor(void *argument);
-void	message(t_arguments *table, int philo_number, char *message);
-void	ft_usleep(__uint64_t);
-void	take_fork(t_philosophers *philosophers);
-void	*routine(void *argument);
-void	start_simulation(t_arguments *table);
-int			get_time(void);
-t_philosophers **initialize_philosophers(t_arguments *table);
-pthread_mutex_t *initialize_forks(t_arguments *table);
-t_arguments	*initialize(int ac, char **av);
-int			str_is_number(char *str);
-int			check_arguments_validity(char **av, int ac);
+int				ft_atoi(char *str);
+void			check_meal(t_philosophers *philosophers);
+void			*monitor(void *argument);
+void			message(t_arguments *table, int philo_number, char *message);
+void			ft_usleep(__uint64_t time_in_milliseconde);
+void			take_fork(t_philosophers *philosophers);
+void			*routine(void *argument);
+void			start_simulation(t_arguments *table);
+int				get_time(void);
+t_philosophers	**initialize_philosophers(t_arguments *table);
+pthread_mutex_t	*initialize_forks(t_arguments *table);
+t_arguments		*initialize_arguments(int ac, char **av);
+int				str_is_number(char *str);
+int				check_arguments_validity(char **av, int ac);
 
 #endif
