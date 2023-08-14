@@ -23,7 +23,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 
-// Structures
+// Structure Philosophe
 typedef struct s_philosophers
 {
 	pid_t				philosopher_pid;
@@ -34,6 +34,7 @@ typedef struct s_philosophers
 	sem_t				*sem_eat;
 }						t_philosophers;
 
+// Structure arguments passes au programme
 typedef struct s_arguments
 {
 	pthread_t			meal_monitor;
