@@ -21,13 +21,13 @@ void take_fork(t_philosophers *philosophers)
     pthread_mutex_lock(&philosophers->table->mutex_forks[philosophers->left_fork]);
     
     // Le philosophe affiche qu'il a pris la fourchette gauche
-    message(philosophers->table, philosophers->philosopher_number, "🍴  has taken the left fork");
+    message(philosophers->table, philosophers->philosopher_number, BWHT "🍴  has taken the left fork" RESET);
 
     // Le philosophe verrouille le mutex de la fourchette droite
     pthread_mutex_lock(&philosophers->table->mutex_forks[philosophers->right_fork]);
 
     // Le philosophe affiche qu'il a pris la fourchette droite
-    message(philosophers->table, philosophers->philosopher_number, "🍴  has taken the right fork");
+    message(philosophers->table, philosophers->philosopher_number, BWHT "🍴  has taken the right fork" RESET);
 
     // Le philosophe verrouille le mutex 'mutex_eating'
     pthread_mutex_lock(&philosophers->mutex_eating);
@@ -39,7 +39,7 @@ void take_fork(t_philosophers *philosophers)
     philosophers->is_eating = 1;
 
     // Affiche que le philosophe est en train de manger
-    message(philosophers->table, philosophers->philosopher_number, "🍔 is eating");
+    message(philosophers->table, philosophers->philosopher_number, BGRN "🍔  is eating" RESET);
 
     // Fait dormir le philosophe pendant la durée du repas
     ft_usleep(philosophers->table->time_to_eat);
@@ -74,13 +74,13 @@ void *routine(void *argument)
         pthread_mutex_unlock(&philosophers->table->mutex_forks[philosophers->right_fork]);
 
         // Le philosophe affiche qu'il dort
-        message(philosophers->table, philosophers->philosopher_number, "💤 is_sleeping");
+        message(philosophers->table, philosophers->philosopher_number, BBLU "💤  is_sleeping" RESET);
 
         // Le philosophe dort pendant un certain temps
         ft_usleep(philosophers->table->time_to_sleep);
 
         // Le philosophe affiche qu'il pense
-        message(philosophers->table, philosophers->philosopher_number, "💭 is thinking");
+        message(philosophers->table, philosophers->philosopher_number, BMAG "💭  is thinking" BMAG);
     }
 
     // Retourne NULL à la fin du thread
