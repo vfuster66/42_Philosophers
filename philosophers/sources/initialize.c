@@ -65,7 +65,7 @@ pthread_mutex_t *initialize_forks(t_arguments *table)
         || table->time_to_eat == -1 || table->time_to_sleep == -1
         || table->number_of_meals == -1)
     {
-        printf("%s", INV_ERROR);
+        printf("%s%s%s", BRED, INV_ERROR, RESET);
         return (NULL);
     }
     
