@@ -1,4 +1,4 @@
-# 42-Philosophers
+# 42_Philosophers
 Qui aurait cru que philosopher serait si mortel ?
 
 ✅ Validé à 125% le 18 septembre 2023
